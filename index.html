@@ -282,13 +282,21 @@
             <p class="text-xs text-slate-500 mt-0.5">Select a category to view top verified local service providers</p>
           </div>
           <span class="hidden sm:inline-block text-[11px] font-bold text-gb-700 bg-gb-50 border border-gb-200 px-2.5 py-0.5 rounded-full">
-            8 Categories + More
+            All Services + 8 Categories + More
           </span>
         </div>
 
         <!-- 8 Circular Category Buttons + 9th "More" Option -->
         <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-3 sm:gap-3 justify-items-center">
           
+          <!-- All Services -->
+          <button onclick="filterCategory('all-services')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="all-services">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-gb-50 group-hover:bg-gb-600 text-gb-700 group-hover:text-white border border-gb-200 group-hover:border-gb-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-squares-four text-2xl sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-gb-700 group-hover:text-gb-600 transition-colors px-0.5">All Services</span>
+          </button>
+
           <!-- 1. Plumber -->
           <button onclick="filterCategory('plumber')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="plumber">
             <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-emerald-50 group-hover:bg-gb-600 text-gb-600 group-hover:text-white border border-emerald-200 group-hover:border-gb-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
@@ -676,8 +684,12 @@
 
     // 3. Category Filter Trigger
     function filterCategory(catKey) {
-      const filtered = mockProvidersData.filter(item => item.catKey === catKey);
-      renderCategorySections(filtered.length > 0 ? filtered : mockProvidersData);
+      const isAllServices = catKey === 'all-services';
+      const filtered = isAllServices
+        ? mockProvidersData
+        : mockProvidersData.filter(item => item.catKey === catKey);
+
+      renderCategorySections(filtered);
 
       document.querySelectorAll('.category-btn').forEach(btn => {
         const isCurrent = btn.dataset.cat === catKey;
