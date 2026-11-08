@@ -1,0 +1,83 @@
+  <!-- ================= TOP HEADER NAVIGATION ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-[96%] xl:max-w-[1450px] mx-auto px-2 sm:px-4 lg:px-6">
+      <div class="flex items-center justify-between h-14 sm:h-18">
+        
+        <!-- Logo -->
+        <a href="/#home" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-gb-800 via-gb-600 to-emerald-400 p-0.5 shadow-md shadow-gb-600/20 group-hover:scale-105 transition-transform">
+            <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+              <i class="ph-bold ph-mountains text-gb-600 text-lg sm:text-xl"></i>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center">
+              <span class="text-lg sm:text-xl font-black tracking-tight text-slate-900">GB</span>
+              <span class="text-lg sm:text-xl font-black text-gb-600">booking</span>
+              <span class="text-[10px] font-bold text-sky-600 ml-0.5 tracking-wider">.com</span>
+            </div>
+            <span class="text-[9px] font-semibold text-slate-400 tracking-wider hidden sm:block">Gilgit-Baltistan Services & Stays</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links (Hidden on Mobile & Tablet) -->
+        <nav class="hidden lg:flex items-center gap-8">
+          <a href="/#home" class="text-sm font-semibold text-gb-600 hover:text-gb-700 transition-colors">Home</a>
+          <a href="/#categories" class="text-sm font-semibold text-slate-600 hover:text-gb-600 transition-colors">Categories</a>
+          <a href="/#services" class="text-sm font-semibold text-slate-600 hover:text-gb-600 transition-colors">Services</a>
+          <a href="/#contact" class="text-sm font-semibold text-slate-600 hover:text-gb-600 transition-colors">Contact</a>
+        </nav>
+
+        <!-- Desktop Header Login Action (Hidden on Mobile & Tablet as requested) -->
+        <div class="hidden lg:flex items-center gap-3">
+          <button onclick="openModal('Login Portal', 'Sign in to manage your bookings or list your services on GBbooking.com.')" class="px-4 py-2 text-xs font-bold text-slate-700 hover:text-gb-600 hover:bg-slate-100 rounded-xl transition-colors">
+            Login
+          </button>
+          <a href="/#services" class="px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-gb-600 to-emerald-500 hover:from-gb-700 hover:to-emerald-600 rounded-xl shadow-md shadow-gb-600/20 transition-all">
+            Book Service
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= FIXED BOTTOM NAVIGATION BAR (MOBILE & TABLET ONLY: lg:hidden) ================= -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-slate-200 lg:hidden shadow-lg py-1.5 px-3">
+    <div class="grid grid-cols-5 items-center text-center">
+      
+      <!-- 1. Home -->
+      <a href="/#home" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-house text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Home</span>
+      </a>
+
+      <!-- 2. Categories -->
+      <a href="/#categories" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-squares-four text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Categories</span>
+      </a>
+
+      <!-- 3. Services -->
+      <a href="/#services" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gb-600 to-emerald-500 text-white flex items-center justify-center -mt-3 shadow-md shadow-gb-600/30 group-hover:scale-110 transition-transform">
+          <i class="ph-bold ph-briefcase text-base"></i>
+        </div>
+        <span class="text-[9px] font-bold mt-0.5 text-gb-700">Services</span>
+      </a>
+
+      <!-- 4. Login -->
+      <button onclick="openModal('Login Portal', 'Sign in to access your booked services or vendor account.')" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-user text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Login</span>
+      </button>
+
+      <!-- 5. Contact -->
+      <a href="/#contact" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-phone text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Contact</span>
+      </a>
+
+    </div>
+  </div>
+
