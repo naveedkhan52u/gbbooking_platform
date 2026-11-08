@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GBbooking.com - Gilgit Baltistan Services & Stays Booking Platform</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            gb: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              accent: '#f59e0b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar hiding for smooth category & service scrolling */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    /* Category label font size strictly 9px on Mobile/Tablet (< 1024px) & Sentence Case */
+    @media (max-width: 1023px) {
+      .cat-label {
+        font-size: 9px !important;
+        line-height: 11px !important;
+        text-transform: none !important;
+      }
+    }
+
+    .hero-slide {
+      transition: opacity 0.7s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pb-20 lg:pb-0 min-h-screen flex flex-col selection:bg-gb-600 selection:text-white">
+
+  <!-- ================= TOP HEADER NAVIGATION ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-[96%] xl:max-w-[1450px] mx-auto px-2 sm:px-4 lg:px-6">
+      <div class="flex items-center justify-between h-14 sm:h-18">
+        
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-2 group">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-gb-800 via-gb-600 to-emerald-400 p-0.5 shadow-md shadow-gb-600/20 group-hover:scale-105 transition-transform">
+            <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+              <i class="ph-bold ph-mountains text-gb-600 text-lg sm:text-xl"></i>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <div class="flex items-center">
+              <span class="text-lg sm:text-xl font-black tracking-tight text-slate-900">GB</span>
+              <span class="text-lg sm:text-xl font-black text-gb-600">booking</span>
+              <span class="text-[10px] font-bold text-sky-600 ml-0.5 tracking-wider">.com</span>
+            </div>
+            <span class="text-[9px] font-semibold text-slate-400 tracking-wider hidden sm:block">Gilgit-Baltistan Services & Stays</span>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation Links (Hidden on Mobile & Tablet) -->
+        <nav class="hidden lg:flex items-center gap-8">
+          <a href="#home" class="text-sm font-semibold text-gb-600 hover:text-gb-700 transition-colors">Home</a>
+          <a href="#categories" class="text-sm font-semibold text-slate-600 hover:text-gb-600 transition-colors">Categories</a>
+          <a href="#services" class="text-sm font-semibold text-slate-600 hover:text-gb-600 transition-colors">Services</a>
+          <a href="#contact" class="text-sm font-semibold text-slate-600 hover:text-gb-600 transition-colors">Contact</a>
+        </nav>
+
+        <!-- Desktop Header Login Action (Hidden on Mobile & Tablet as requested) -->
+        <div class="hidden lg:flex items-center gap-3">
+          <button onclick="openModal('Login Portal', 'Sign in to manage your bookings or list your services on GBbooking.com.')" class="px-4 py-2 text-xs font-bold text-slate-700 hover:text-gb-600 hover:bg-slate-100 rounded-xl transition-colors">
+            Login
+          </button>
+          <a href="#services" class="px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-gb-600 to-emerald-500 hover:from-gb-700 hover:to-emerald-600 rounded-xl shadow-md shadow-gb-600/20 transition-all">
+            Book Service
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- ================= HERO SECTION ================= -->
+    <section id="home" class="relative bg-slate-950 overflow-hidden py-5 sm:py-8 lg:py-10 border-b border-slate-200 text-white">
+      
+      <!-- Vivid Green Mountain Background Image - Strictly Scoped inside Hero Container -->
+      <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1800&q=80" alt="Gilgit Baltistan Green Mountains" class="w-full h-full object-cover object-center scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-900/80"></div>
+      </div>
+
+      <div class="relative z-10 max-w-[96%] xl:max-w-[1450px] mx-auto px-2 sm:px-4 lg:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
+          
+          <!-- LEFT SIDE: 2-SECOND AUTO-ROTATING FULL COVER SLIDER (No Text Background Blocks) -->
+          <div class="lg:col-span-7 relative">
+            <div id="hero-slider-container" class="relative w-full h-[240px] sm:h-[300px] lg:h-[340px] rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-slate-900">
+              
+              <!-- Slide 1: Hotels & Room Bookings -->
+              <div class="hero-slide absolute inset-0 opacity-100 flex flex-col justify-end p-5 sm:p-7">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Hotels in Hunza & Skardu" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent"></div>
+                
+                <!-- Text with NO Background Blocks -->
+                <div class="relative z-10 max-w-xl">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-gb-600 text-white text-[10px] font-extrabold rounded-md uppercase tracking-wider mb-1.5 shadow-md">
+                    <i class="ph-bold ph-star text-yellow-300"></i> Hotels & Stay Bookings
+                  </span>
+                  <h2 class="text-lg sm:text-2xl font-extrabold text-white drop-shadow-lg leading-tight">
+                    Luxury Hotels & Cozy Rooms in Hunza & Skardu
+                  </h2>
+                  <p class="text-slate-200 text-xs sm:text-sm mt-1 drop-shadow-md line-clamp-2">
+                    Book mountain view suites, family resorts, and budget student hostels at direct local rates.
+                  </p>
+                  <div class="mt-3">
+                    <button onclick="filterCategory('hotels-bookings')" class="px-3.5 py-2 bg-gb-600 hover:bg-gb-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all hover:scale-105 inline-flex items-center gap-1.5">
+                      Explore Hotels <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2: Mechanics & Technicians -->
+              <div class="hero-slide absolute inset-0 opacity-0 flex flex-col justify-end p-5 sm:p-7">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Plumber & Electrician" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent"></div>
+                
+                <div class="relative z-10 max-w-xl">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-sky-600 text-white text-[10px] font-extrabold rounded-md uppercase tracking-wider mb-1.5 shadow-md">
+                    <i class="ph-bold ph-wrench"></i> Doorstep Technicians
+                  </span>
+                  <h2 class="text-lg sm:text-2xl font-extrabold text-white drop-shadow-lg leading-tight">
+                    Verified Plumbers, Electricians & AC Repair
+                  </h2>
+                  <p class="text-slate-200 text-xs sm:text-sm mt-1 drop-shadow-md line-clamp-2">
+                    Fast response home maintenance experts across Gilgit, Skardu, Ghizer, and Nagar districts.
+                  </p>
+                  <div class="mt-3">
+                    <button onclick="filterCategory('electrician')" class="px-3.5 py-2 bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all hover:scale-105 inline-flex items-center gap-1.5">
+                      Find Electrician <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 3: 4x4 Jeeps & Rental Cars -->
+              <div class="hero-slide absolute inset-0 opacity-0 flex flex-col justify-end p-5 sm:p-7">
+                <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Rental Cars & Jeeps" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent"></div>
+                
+                <div class="relative z-10 max-w-xl">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-600 text-white text-[10px] font-extrabold rounded-md uppercase tracking-wider mb-1.5 shadow-md">
+                    <i class="ph-bold ph-car"></i> Mountain Vehicles
+                  </span>
+                  <h2 class="text-lg sm:text-2xl font-extrabold text-white drop-shadow-lg leading-tight">
+                    Prado, Land Cruiser & Car Rentals
+                  </h2>
+                  <p class="text-slate-200 text-xs sm:text-sm mt-1 drop-shadow-md line-clamp-2">
+                    Rent 4x4 mountain Jeeps with verified drivers for Deosai Plains, Khunjerab Pass & Phander Lake trips.
+                  </p>
+                  <div class="mt-3">
+                    <button onclick="filterCategory('rental-car')" class="px-3.5 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all hover:scale-105 inline-flex items-center gap-1.5">
+                      Book 4x4 Jeep <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 4: Event Canopies & Catering -->
+              <div class="hero-slide absolute inset-0 opacity-0 flex flex-col justify-end p-5 sm:p-7">
+                <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Events & Catering" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent"></div>
+                
+                <div class="relative z-10 max-w-xl">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-purple-600 text-white text-[10px] font-extrabold rounded-md uppercase tracking-wider mb-1.5 shadow-md">
+                    <i class="ph-bold ph-armchair"></i> Events & Catering
+                  </span>
+                  <h2 class="text-lg sm:text-2xl font-extrabold text-white drop-shadow-lg leading-tight">
+                    Party Canopies, Chairs & Catering Rentals
+                  </h2>
+                  <p class="text-slate-200 text-xs sm:text-sm mt-1 drop-shadow-md line-clamp-2">
+                    Complete wedding tents, chair rentals, sound setups, and traditional GB catering feasts.
+                  </p>
+                  <div class="mt-3">
+                    <button onclick="filterCategory('party-rentals')" class="px-3.5 py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-xl shadow-lg transition-all hover:scale-105 inline-flex items-center gap-1.5">
+                      Reserve Setup <i class="ph-bold ph-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slider Dots Indicator -->
+              <div class="absolute top-3 right-3 z-20 flex gap-1.5">
+                <button onclick="setBannerSlide(0)" class="slider-dot w-2 h-2 rounded-full bg-white transition-all"></button>
+                <button onclick="setBannerSlide(1)" class="slider-dot w-2 h-2 rounded-full bg-white/40 transition-all"></button>
+                <button onclick="setBannerSlide(2)" class="slider-dot w-2 h-2 rounded-full bg-white/40 transition-all"></button>
+                <button onclick="setBannerSlide(3)" class="slider-dot w-2 h-2 rounded-full bg-white/40 transition-all"></button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- RIGHT SIDE: SMALL SERVICES SEARCH BAR & LOCATION SELECTOR -->
+          <div class="lg:col-span-5">
+            <div class="bg-white/10 backdrop-blur-xl rounded-2xl p-4 sm:p-5 shadow-2xl border border-white/20">
+              
+              <div class="mb-3">
+                <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Quick Finder</span>
+                <h3 class="text-base sm:text-lg font-bold text-white mt-0.5">Filter Service Providers</h3>
+                <p class="text-[11px] text-slate-300">Locate mechanics, room bookings & car rentals near you</p>
+              </div>
+
+              <form onsubmit="handleSearch(event)" class="space-y-3">
+                <!-- Location Selection Dropdown -->
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-300 uppercase tracking-wider mb-1">District Location</label>
+                  <div class="relative">
+                    <i class="ph-bold ph-map-pin absolute left-3 top-1/2 -translate-y-1/2 text-emerald-400 text-sm"></i>
+                    <select id="location-select" class="w-full pl-8 pr-7 py-2 text-xs bg-slate-900/90 text-white border border-slate-700 rounded-xl focus:ring-2 focus:ring-gb-500 outline-none appearance-none">
+                      <option value="all">📍 All Gilgit-Baltistan Districts</option>
+                      <option value="Gilgit">Gilgit City</option>
+                      <option value="Skardu">Skardu District</option>
+                      <option value="Hunza">Hunza (Karimabad / Aliabad)</option>
+                      <option value="Nagar">Nagar Valley</option>
+                      <option value="Ghizer">Ghizer (Gahkuch / Phander)</option>
+                      <option value="Astore">Astore Valley</option>
+                      <option value="Ghanche">Ghanche (Khaplu)</option>
+                      <option value="Diamer">Diamer (Chilas)</option>
+                    </select>
+                    <i class="ph-bold ph-caret-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                  </div>
+                </div>
+
+                <!-- Service Keyword Search -->
+                <div>
+                  <label class="block text-[10px] font-bold text-slate-300 uppercase tracking-wider mb-1">Service or Provider</label>
+                  <div class="relative">
+                    <i class="ph-bold ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="search-keyword" placeholder="e.g. Plumber, Hotel, Prado jeep, Hostel..." class="w-full pl-8 pr-3 py-2 text-xs bg-slate-900/90 text-white border border-slate-700 rounded-xl focus:ring-2 focus:ring-gb-500 placeholder-slate-400 outline-none" />
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex gap-2 pt-1">
+                  <button type="submit" class="flex-grow py-2 px-3 bg-gradient-to-r from-gb-600 to-emerald-500 hover:from-gb-700 hover:to-emerald-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5">
+                    <i class="ph-bold ph-funnel"></i> Filter Providers
+                  </button>
+                  <button type="button" onclick="resetSearchFilters()" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl transition-colors">
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CIRCULAR CATEGORIES SECTION ================= -->
+    <section id="categories" class="py-6 sm:py-8 bg-white border-b border-slate-200">
+      <div class="max-w-[96%] xl:max-w-[1450px] mx-auto px-2 sm:px-4 lg:px-6">
+        
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold text-slate-900 tracking-tight">Browse Service Categories</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Select a category to view top verified local service providers</p>
+          </div>
+          <span class="hidden sm:inline-block text-[11px] font-bold text-gb-700 bg-gb-50 border border-gb-200 px-2.5 py-0.5 rounded-full">
+            8 Categories + More
+          </span>
+        </div>
+
+        <!-- 8 Circular Category Buttons + 9th "More" Option -->
+        <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-9 gap-2 sm:gap-3 justify-items-center">
+          
+          <!-- 1. Plumber -->
+          <button onclick="filterCategory('plumber')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="plumber">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-emerald-50 group-hover:bg-gb-600 text-gb-600 group-hover:text-white border border-emerald-200 group-hover:border-gb-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-drop text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-gb-600 transition-colors px-0.5">Plumber</span>
+          </button>
+
+          <!-- 2. Electrician -->
+          <button onclick="filterCategory('electrician')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="electrician">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-amber-50 group-hover:bg-amber-500 text-amber-600 group-hover:text-white border border-amber-200 group-hover:border-amber-500 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-lightning text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-amber-600 transition-colors px-0.5">Electrician</span>
+          </button>
+
+          <!-- 3. Carpenter -->
+          <button onclick="filterCategory('carpenter')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="carpenter">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-amber-100/60 group-hover:bg-amber-800 text-amber-800 group-hover:text-white border border-amber-300 group-hover:border-amber-800 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-hammer text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-amber-800 transition-colors px-0.5">Carpenter</span>
+          </button>
+
+          <!-- 4. Ac technicians -->
+          <button onclick="filterCategory('ac-technicians')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="ac-technicians">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-cyan-50 group-hover:bg-cyan-600 text-cyan-600 group-hover:text-white border border-cyan-200 group-hover:border-cyan-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-wind text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-cyan-600 transition-colors px-0.5">Ac technicians</span>
+          </button>
+
+          <!-- 5. Room bookings -->
+          <button onclick="filterCategory('room-bookings')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="room-bookings">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-blue-50 group-hover:bg-blue-600 text-blue-600 group-hover:text-white border border-blue-200 group-hover:border-blue-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-bed text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-blue-600 transition-colors px-0.5">Room bookings</span>
+          </button>
+
+          <!-- 6. Hotels bookings -->
+          <button onclick="filterCategory('hotels-bookings')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="hotels-bookings">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-indigo-50 group-hover:bg-indigo-600 text-indigo-600 group-hover:text-white border border-indigo-200 group-hover:border-indigo-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-buildings text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-indigo-600 transition-colors px-0.5">Hotels bookings</span>
+          </button>
+
+          <!-- 7. Rental car booking -->
+          <button onclick="filterCategory('rental-car')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="rental-car">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-violet-50 group-hover:bg-violet-600 text-violet-600 group-hover:text-white border border-violet-200 group-hover:border-violet-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-car text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-violet-600 transition-colors px-0.5">Rental car booking</span>
+          </button>
+
+          <!-- 8. Party & event rentals -->
+          <button onclick="filterCategory('party-rentals')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="party-rentals">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-rose-50 group-hover:bg-rose-600 text-rose-600 group-hover:text-white border border-rose-200 group-hover:border-rose-600 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-armchair text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-700 group-hover:text-rose-600 transition-colors px-0.5">Party & event rentals</span>
+          </button>
+
+          <!-- 9. More (Hostels, Catering, etc.) -->
+          <button onclick="openMoreCategoriesModal()" class="group flex flex-col items-center focus:outline-none w-full">
+            <div class="w-13 h-13 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-slate-100 group-hover:bg-slate-900 text-slate-700 group-hover:text-white border border-slate-300 group-hover:border-slate-900 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300">
+              <i class="ph-bold ph-dots-three text-lg sm:text-2xl"></i>
+            </div>
+            <span class="cat-label font-bold text-center mt-1.5 text-slate-800 group-hover:text-slate-900 transition-colors px-0.5">More</span>
+          </button>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SERVICES PROVIDERS SECTION ================= -->
+    <!-- Displays EXACTLY 4 service providers per category with swipe & View All button -->
+    <section id="services" class="py-8 sm:py-10 bg-slate-50">
+      <div class="max-w-[96%] xl:max-w-[1450px] mx-auto px-2 sm:px-4 lg:px-6 space-y-8" id="categories-container">
+        <!-- Populated dynamically via JavaScript with 4 items per category -->
+      </div>
+    </section>
+
+    <!-- STUDENT HOSTELS BANNER -->
+    <section class="py-8 bg-gradient-to-r from-gb-900 via-gb-800 to-slate-900 text-white relative overflow-hidden border-y border-gb-800">
+      <div class="max-w-[96%] xl:max-w-[1450px] mx-auto px-2 sm:px-4 lg:px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-5">
+        <div>
+          <span class="px-2.5 py-0.5 bg-gb-500/20 text-gb-300 border border-gb-400/30 rounded-md text-[10px] font-bold uppercase tracking-wider">Student Focused</span>
+          <h2 class="text-xl sm:text-2xl font-black mt-1">Hostels Booking for Students in GB</h2>
+          <p class="text-xs text-slate-300 max-w-xl mt-0.5">Affordable student hostels near Karakoram International University (KIU) Gilgit and Skardu Campus with mess & study facilities.</p>
+        </div>
+        <button onclick="filterCategory('hostels-booking')" class="px-5 py-2.5 bg-white text-gb-900 hover:bg-gb-50 font-bold rounded-xl text-xs transition-all shadow-md whitespace-nowrap">
+          Explore Student Hostels
+        </button>
+      </div>
+    </section>
+
+    <!-- FOOTER & CONTACT -->
+    <footer id="contact" class="bg-slate-900 text-slate-400 pt-10 pb-20 lg:pb-10 border-t border-slate-800">
+      <div class="max-w-[96%] xl:max-w-[1450px] mx-auto px-2 sm:px-4 lg:px-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          
+          <div class="md:col-span-2">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-7 h-7 rounded-lg bg-gb-600 flex items-center justify-center text-white font-extrabold text-xs">GB</div>
+              <span class="text-white font-extrabold text-base">GBbooking.com</span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-sm leading-relaxed">The all-in-one verified local service booking marketplace for Gilgit-Baltistan. Connecting locals and tourists with plumbers, electricians, hotels, 4x4 jeeps, and event rentals.</p>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-xs text-white mb-2 uppercase tracking-wider">Navigation</h4>
+            <ul class="space-y-1.5 text-xs">
+              <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+              <li><a href="#categories" class="hover:text-white transition-colors">Categories</a></li>
+              <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+              <li><a href="javascript:void(0)" onclick="openModal('Vendor Registration', 'Fill form to register as a verified service provider in GB.')" class="hover:text-white transition-colors">Register as Provider</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-bold text-xs text-white mb-2 uppercase tracking-wider">GB Helpline</h4>
+            <ul class="space-y-1.5 text-xs">
+              <li class="flex items-center gap-2"><i class="ph-bold ph-phone text-gb-500"></i> +92 5811 456789</li>
+              <li class="flex items-center gap-2"><i class="ph-bold ph-envelope text-gb-500"></i> support@gbbooking.com</li>
+              <li class="flex items-center gap-2"><i class="ph-bold ph-map-pin text-gb-500"></i> Naya Bazaar, Gilgit City</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="pt-5 border-t border-slate-800 text-center text-[11px] text-slate-500">
+          &copy; 2026 GBbooking.com. All rights reserved. Gilgit-Baltistan Services Booking Platform.
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ================= FIXED BOTTOM NAVIGATION BAR (MOBILE & TABLET ONLY: lg:hidden) ================= -->
+  <div class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-t border-slate-200 lg:hidden shadow-lg py-1.5 px-3">
+    <div class="grid grid-cols-5 items-center text-center">
+      
+      <!-- 1. Home -->
+      <a href="#home" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-house text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Home</span>
+      </a>
+
+      <!-- 2. Categories -->
+      <a href="#categories" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-squares-four text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Categories</span>
+      </a>
+
+      <!-- 3. Services -->
+      <a href="#services" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-gb-600 to-emerald-500 text-white flex items-center justify-center -mt-3 shadow-md shadow-gb-600/30 group-hover:scale-110 transition-transform">
+          <i class="ph-bold ph-briefcase text-base"></i>
+        </div>
+        <span class="text-[9px] font-bold mt-0.5 text-gb-700">Services</span>
+      </a>
+
+      <!-- 4. Login -->
+      <button onclick="openModal('Login Portal', 'Sign in to access your booked services or vendor account.')" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-user text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Login</span>
+      </button>
+
+      <!-- 5. Contact -->
+      <a href="#contact" class="flex flex-col items-center justify-center text-slate-600 hover:text-gb-600 transition-colors py-1 group">
+        <i class="ph-bold ph-phone text-lg group-hover:scale-110 transition-transform"></i>
+        <span class="text-[9px] font-bold mt-0.5">Contact</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Generic Information & Details Modal -->
+  <div id="info-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 shadow-2xl relative">
+      <button onclick="closeModal('info-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1">
+        <i class="ph-bold ph-x text-base"></i>
+      </button>
+      <h3 id="info-modal-title" class="text-base font-bold text-slate-900 mb-1">Dialog Title</h3>
+      <p id="info-modal-body" class="text-xs text-slate-600 mb-5 leading-relaxed">Dialog description content goes here.</p>
+      <button onclick="closeModal('info-modal')" class="w-full py-2 bg-gb-600 text-white font-bold text-xs rounded-xl shadow-md">
+        Close Window
+      </button>
+    </div>
+  </div>
+
+  <!-- Call Confirmation Modal -->
+  <div id="call-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-5 text-center shadow-2xl relative">
+      <div class="w-10 h-10 bg-gb-100 text-gb-600 rounded-full flex items-center justify-center mx-auto mb-2.5">
+        <i class="ph-bold ph-phone-call text-xl"></i>
+      </div>
+      <h3 id="call-provider-name" class="font-bold text-slate-900 text-sm">Calling Provider</h3>
+      <p id="call-provider-phone" class="text-gb-600 font-extrabold text-lg my-1.5">+92 355-1234567</p>
+      <p class="text-[11px] text-slate-500 mb-4">Direct line for verified GBbooking provider.</p>
+      <div class="flex gap-2">
+        <button onclick="closeModal('call-modal')" class="w-1/2 py-2 rounded-xl border border-slate-300 text-slate-700 text-xs font-bold">Cancel</button>
+        <a id="call-trigger-link" href="#" class="w-1/2 py-2 rounded-xl bg-gb-600 hover:bg-gb-700 text-white text-xs font-bold flex items-center justify-center">Dial Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- View All Category Modal -->
+  <div id="view-all-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-4xl w-full p-5 sm:p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeModal('view-all-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1">
+        <i class="ph-bold ph-x text-lg"></i>
+      </button>
+      <h3 id="view-all-title" class="text-lg font-bold text-slate-900 mb-0.5">Category Service Providers</h3>
+      <p class="text-xs text-slate-500 mb-5">All registered local verified providers in Gilgit-Baltistan</p>
+      <div id="view-all-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- More Categories Modal -->
+  <div id="more-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 shadow-2xl relative">
+      <button onclick="closeModal('more-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1">
+        <i class="ph-bold ph-x text-base"></i>
+      </button>
+      <h3 class="font-bold text-slate-900 text-base mb-3">More Categories</h3>
+      <div class="grid grid-cols-2 gap-2.5 text-xs">
+        <button onclick="closeModal('more-modal'); filterCategory('hostels-booking')" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left hover:bg-gb-50 font-bold text-slate-700">🎓 Hostels booking (Students)</button>
+        <button onclick="closeModal('more-modal'); filterCategory('catering-services')" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left hover:bg-gb-50 font-bold text-slate-700">🍲 Catering services</button>
+        <button onclick="closeModal('more-modal'); filterCategory('tour-guides')" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left hover:bg-gb-50 font-bold text-slate-700">🏔 Mountain tour guides</button>
+        <button onclick="closeModal('more-modal'); filterCategory('solar-installation')" class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-left hover:bg-gb-50 font-bold text-slate-700">☀️ Solar technicians</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT APP LOGIC ================= -->
+  <script>
+    // GB PROVIDERS DATA (EXACTLY 4 providers per category)
+    const mockProvidersData = [
+      // Plumber (4 Providers)
+      { id: 'pl-1', name: 'Karim Pipe Fitting & Plumbing', catKey: 'plumber', category: 'Plumber', location: 'Gilgit (Naya Bazaar)', price: 'PKR 1,200 / Visit', rating: 4.9, reviews: 42, phone: '+92 355 5812341', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=500&q=80', description: 'Expert emergency plumbing, bathroom pipe fitting, water pump repair, and hot water geyser installation in Gilgit city.' },
+      { id: 'pl-2', name: 'Skardu Thermal Plumber Services', catKey: 'plumber', category: 'Plumber', location: 'Skardu (Hussainabad)', price: 'PKR 1,500 / Visit', rating: 4.8, reviews: 29, phone: '+92 355 5849922', image: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=500&q=80', description: 'Specialized anti-freeze pipe insulation and heavy water line repair for winter cold weather conditions in Skardu.' },
+      { id: 'pl-3', name: 'Hunza Valley Sanitary & Plumber', catKey: 'plumber', category: 'Plumber', location: 'Hunza (Aliabad)', price: 'PKR 1,400 / Visit', rating: 4.7, reviews: 18, phone: '+92 355 5831100', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=500&q=80', description: 'Hotel and domestic bathroom sanitary installations and maintenance services across Hunza Nagar.' },
+      { id: 'pl-4', name: 'Ghizer Express Leak Repair', catKey: 'plumber', category: 'Plumber', location: 'Ghizer (Gahkuch)', price: 'PKR 1,100 / Visit', rating: 4.6, reviews: 14, phone: '+92 355 5824411', image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=500&q=80', description: 'Prompt domestic water line connection and underground pipe leakage detection in Ghizer valley.' },
+
+      // Electrician (4 Providers)
+      { id: 'el-1', name: 'Gilgit Power Tech Electrician', catKey: 'electrician', category: 'Electrician', location: 'Gilgit (Jubilee Town)', price: 'PKR 1,000 / Hour', rating: 4.9, reviews: 55, phone: '+92 355 5819090', image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=500&q=80', description: 'Complete home wiring, short circuit troubleshooting, and generator / UPS connection specialist.' },
+      { id: 'el-2', name: 'Karakoram Electric & Solar Repairs', catKey: 'electrician', category: 'Electrician', location: 'Skardu (Main Bazaar)', price: 'PKR 1,200 / Visit', rating: 4.8, reviews: 34, phone: '+92 355 5844433', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=500&q=80', description: 'Commercial hotel electrical wiring, solar panel inverter setup, and emergency repair service.' },
+      { id: 'el-3', name: 'Passu Electric Solutions', catKey: 'electrician', category: 'Electrician', location: 'Hunza (Karimabad)', price: 'PKR 1,100 / Hour', rating: 4.7, reviews: 22, phone: '+92 355 5833211', image: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?auto=format&fit=crop&w=500&q=80', description: 'Quick local electrical fixes, breaker box wiring, and outdoor lighting setup for guest houses.' },
+      { id: 'el-4', name: 'Astore Power & Inverter Master', catKey: 'electrician', category: 'Electrician', location: 'Astore (City Center)', price: 'PKR 1,000 / Visit', rating: 4.6, reviews: 16, phone: '+92 355 5852200', image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=500&q=80', description: 'Solar battery maintenance, home circuit fixes, and electrical generator servicing.' },
+
+      // Carpenter (4 Providers)
+      { id: 'cr-1', name: 'Hunza Traditional Wood Crafts', catKey: 'carpenter', category: 'Carpenter', location: 'Hunza (Karimabad)', price: 'PKR 2,500 / Day', rating: 5.0, reviews: 61, phone: '+92 355 5839988', image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=500&q=80', description: 'Custom handcrafted wooden doors, traditional GB ceiling carving, furniture repair, and modern cabinets.' },
+      { id: 'cr-2', name: 'Gilgit Woodwork & Interior', catKey: 'carpenter', category: 'Carpenter', location: 'Gilgit (Airport Road)', price: 'PKR 2,000 / Day', rating: 4.8, reviews: 31, phone: '+92 355 5817766', image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80', description: 'Door fitting, kitchen cabinets creation, bed frame assembly, and hotel wooden flooring repair.' },
+      { id: 'cr-3', name: 'Baltistan Master Carpenters', catKey: 'carpenter', category: 'Carpenter', location: 'Skardu (Kachura)', price: 'PKR 2,200 / Day', rating: 4.7, reviews: 19, phone: '+92 355 5842211', image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=500&q=80', description: 'Rustic wooden furniture crafting, window frame repair, and resort wooden deck installations.' },
+      { id: 'cr-4', name: 'Khaplu Wooden Furniture Studio', catKey: 'carpenter', category: 'Carpenter', location: 'Ghanche (Khaplu)', price: 'PKR 2,300 / Day', rating: 4.9, reviews: 26, phone: '+92 355 5863322', image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=500&q=80', description: 'Traditional carved wooden tables, chairs, and custom home interior carpentry.' },
+
+      // AC Technicians (4 Providers)
+      { id: 'ac-1', name: 'Gilgit Chill Cool AC Services', catKey: 'ac-technicians', category: 'Ac technicians', location: 'Gilgit (Kashrote)', price: 'PKR 1,800 / Visit', rating: 4.8, reviews: 39, phone: '+92 355 5815544', image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=500&q=80', description: 'Inverter AC gas refill, cooling master service, wall bracket mounting, and heating HVAC maintenance.' },
+      { id: 'ac-2', name: 'North Climate HVAC & Heating', catKey: 'ac-technicians', category: 'Ac technicians', location: 'Skardu (New Town)', price: 'PKR 2,000 / Visit', rating: 4.9, reviews: 27, phone: '+92 355 5843355', image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=500&q=80', description: 'Dual heating & cooling AC servicing, compressor replacements, and commercial VRF HVAC systems.' },
+      { id: 'ac-3', name: 'Hunza Cool Tech & Repair', catKey: 'ac-technicians', category: 'Ac technicians', location: 'Hunza (Ganesh)', price: 'PKR 1,800 / Visit', rating: 4.6, reviews: 15, phone: '+92 355 5834411', image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=500&q=80', description: 'Seasonal AC cleaning, gas leak repair, and heat pump tune-up for hotels and residential houses.' },
+      { id: 'ac-4', name: 'Nagar HVAC & Climate Control', catKey: 'ac-technicians', category: 'Ac technicians', location: 'Nagar Valley', price: 'PKR 1,700 / Visit', rating: 4.5, reviews: 11, phone: '+92 355 5871122', image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=500&q=80', description: 'Reliable heating system servicing, inverter unit installations, and thermostat fixes.' },
+
+      // Room Bookings (4 Providers)
+      { id: 'rb-1', name: 'Karakoram Mountain View Room', catKey: 'room-bookings', category: 'Room bookings', location: 'Hunza (Duikar)', price: 'PKR 6,500 / Night', rating: 4.9, reviews: 84, phone: '+92 355 5837777', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80', description: 'Scenic panoramic sunset view rooms overlooking Rakaposhi & Ultar peaks with hot water & Wi-Fi.' },
+      { id: 'rb-2', name: 'Shangrila Lake Deluxe Room', catKey: 'room-bookings', category: 'Room bookings', location: 'Skardu (Lower Kachura)', price: 'PKR 8,000 / Night', rating: 4.9, reviews: 92, phone: '+92 355 5841122', image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80', description: 'Serene lakeside room with private balcony, mountain view, free breakfast, and heater included.' },
+      { id: 'rb-3', name: 'Gilgit Executive Suite Room', catKey: 'room-bookings', category: 'Room bookings', location: 'Gilgit (River View Road)', price: 'PKR 4,500 / Night', rating: 4.7, reviews: 40, phone: '+92 355 5818833', image: 'https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=500&q=80', description: 'Clean executive room near Gilgit Airport with attached washroom, smart TV, and 24/7 power backup.' },
+      { id: 'rb-4', name: 'Phander Lake View Cozy Room', catKey: 'room-bookings', category: 'Room bookings', location: 'Ghizer (Phander)', price: 'PKR 5,000 / Night', rating: 4.8, reviews: 31, phone: '+92 355 5829900', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80', description: 'Peaceful trout lake view cottage room with king bed, traditional carpet, and home cooked breakfast.' },
+
+      // Hotels Bookings (4 Providers)
+      { id: 'hb-1', name: 'Serena Valley Resort & Hotel', catKey: 'hotels-bookings', category: 'Hotels bookings', location: 'Hunza (Karimabad)', price: 'PKR 14,500 / Night', rating: 5.0, reviews: 140, phone: '+92 355 5830000', image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80', description: 'Premium heritage 5-star style hotel accommodation surrounded by apricot gardens with full buffet.' },
+      { id: 'hb-2', name: 'Baltistan Continental Hotel', catKey: 'hotels-bookings', category: 'Hotels bookings', location: 'Skardu (City Center)', price: 'PKR 9,000 / Night', rating: 4.8, reviews: 78, phone: '+92 355 5845566', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80', description: 'Modern hotel facility with family suites, conference hall, and top floor rooftop restaurant.' },
+      { id: 'hb-3', name: 'Astore Valley Gateway Hotel', catKey: 'hotels-bookings', category: 'Hotels bookings', location: 'Astore (Rama Road)', price: 'PKR 5,500 / Night', rating: 4.6, reviews: 33, phone: '+92 355 5851122', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=500&q=80', description: 'Comfortable mountain hotel ideal for tourists heading towards Rama Meadow & Deosai Plains.' },
+      { id: 'hb-4', name: 'Passu Cones View Hotel', catKey: 'hotels-bookings', category: 'Hotels bookings', location: 'Hunza (Passu)', price: 'PKR 8,500 / Night', rating: 4.9, reviews: 54, phone: '+92 355 5838844', image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=500&q=80', description: 'Direct view of Cathedral Passu Cones with spacious luxury rooms and continental dining.' },
+
+      // Rental Car Booking (4 Providers)
+      { id: 'rc-1', name: 'GB Mountain 4x4 Prado & Land Cruiser', catKey: 'rental-car', category: 'Rental car booking', location: 'Gilgit (Airport Pick)', price: 'PKR 12,000 / Day', rating: 4.9, reviews: 88, phone: '+92 355 5813333', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500&q=80', description: 'Heavy duty Toyota Prado TZ / TX with experienced local mountain driver for Khunjerab Pass & Deosai.' },
+      { id: 'rc-2', name: 'Skardu Deosai Jeep Safari Rentals', catKey: 'rental-car', category: 'Rental car booking', location: 'Skardu (Sadpara Road)', price: 'PKR 9,500 / Day', rating: 4.8, reviews: 52, phone: '+92 355 5847788', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=500&q=80', description: 'Open top Willy 4x4 Jeeps and Grand Vitara rentals for rough terrain off-roading to Deosai & Basho.' },
+      { id: 'rc-3', name: 'Hunza Corolla & Grand Cabin Coaster', catKey: 'rental-car', category: 'Rental car booking', location: 'Hunza (Aliabad)', price: 'PKR 6,000 / Day', rating: 4.7, reviews: 41, phone: '+92 355 5836655', image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=500&q=80', description: 'GLI Corolla cars and Hiace Saloon van rentals for smooth KKH highway family travel.' },
+      { id: 'rc-4', name: 'Deosai 4x4 Ravo Cruiser Rentals', catKey: 'rental-car', category: 'Rental car booking', location: 'Skardu (Airport Pick)', price: 'PKR 14,000 / Day', rating: 4.9, reviews: 36, phone: '+92 355 5849900', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=500&q=80', description: 'Double cabin Toyota Revo 4x4 vehicles for extreme mountain road journeys.' },
+
+      // Party & Event Rentals (4 Providers)
+      { id: 'pe-1', name: 'Royal Event Tent & Canopy Rentals', catKey: 'party-rentals', category: 'Party & event rentals', location: 'Gilgit (Jubilee Town)', price: 'PKR 15,000 / Event', rating: 4.9, reviews: 46, phone: '+92 355 5814499', image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=500&q=80', description: 'Waterproof marquee canopies, 200+ plastic & cushioned chairs, banquet tables, and stage lighting.' },
+      { id: 'pe-2', name: 'Hunza Cultural Catering & Event Decor', catKey: 'party-rentals', category: 'Party & event rentals', location: 'Hunza (Karimabad)', price: 'PKR 800 / Head', rating: 5.0, reviews: 38, phone: '+92 355 5832299', image: 'https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=500&q=80', description: 'Traditional Balti/Hunza dishes cooking service (Diram Fitti, Chapshuro, Biryani) with crockery & servers.' },
+      { id: 'pe-3', name: 'Baltistan Wedding Chairs & Canopy Setup', catKey: 'party-rentals', category: 'Party & event rentals', location: 'Skardu (Near Airport)', price: 'PKR 12,000 / Event', rating: 4.7, reviews: 25, phone: '+92 355 5848800', image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=500&q=80', description: 'Sound system, VIP sofa seating, wedding canopy tents, and buffet food counter tables rental.' },
+      { id: 'pe-4', name: 'Gahkuch Canopy & Sound Setup', catKey: 'party-rentals', category: 'Party & event rentals', location: 'Ghizer (Gahkuch)', price: 'PKR 10,000 / Event', rating: 4.6, reviews: 18, phone: '+92 355 5821144', image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=500&q=80', description: 'Event chairs, stage backdrop decoration, generator power backup, and food catering.' },
+
+      // Hostels Booking (4 Providers)
+      { id: 'sb-1', name: 'KIU Student Hostel & Mess (Gilgit)', catKey: 'hostels-booking', category: 'Hostels booking', location: 'Gilgit (KIU University Road)', price: 'PKR 12,000 / Month', rating: 4.8, reviews: 64, phone: '+92 355 5816633', image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=500&q=80', description: 'Dedicated quiet student hostel with 3-time mess meals, high-speed Wi-Fi internet, and study tables.' },
+      { id: 'sb-2', name: 'Skardu Campus Boys & Girls Hostel', catKey: 'hostels-booking', category: 'Hostels booking', location: 'Skardu (College Road)', price: 'PKR 10,000 / Month', rating: 4.7, reviews: 43, phone: '+92 355 5843300', image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=500&q=80', description: 'Secure student accommodation with hot water, power backup generator, and walking distance to college.' },
+      { id: 'sb-3', name: 'Karakoram Scholar Lodge', catKey: 'hostels-booking', category: 'Hostels booking', location: 'Gilgit (Konodas)', price: 'PKR 11,500 / Month', rating: 4.9, reviews: 37, phone: '+92 355 5819911', image: 'https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=500&q=80', description: 'Affordable single & shared rooms for University & College students with security guards.' },
+      { id: 'sb-4', name: 'Gilgit Medical & Dental Student Residency', catKey: 'hostels-booking', category: 'Hostels booking', location: 'Gilgit (DHQ Road)', price: 'PKR 13,000 / Month', rating: 4.8, reviews: 29, phone: '+92 355 5814422', image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=500&q=80', description: 'Clean accommodation with silent study halls, internet, and hygienic mess for medical students.' }
+    ];
+
+    let currentSlide = 0;
+    let slideInterval;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initBannerSlider();
+      renderCategorySections(mockProvidersData);
+    });
+
+    // 1. Auto-rotating Hero Banner Slider (2 Seconds)
+    function initBannerSlider() {
+      const slides = document.querySelectorAll('.hero-slide');
+      const dots = document.querySelectorAll('.slider-dot');
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          if (i === index) {
+            slide.classList.remove('opacity-0', 'pointer-events-none');
+            slide.classList.add('opacity-100');
+          } else {
+            slide.classList.remove('opacity-100');
+            slide.classList.add('opacity-0', 'pointer-events-none');
+          }
+        });
+
+        dots.forEach((dot, i) => {
+          if (i === index) {
+            dot.classList.remove('bg-white/40', 'w-2');
+            dot.classList.add('bg-white', 'w-5');
+          } else {
+            dot.classList.remove('bg-white', 'w-5');
+            dot.classList.add('bg-white/40', 'w-2');
+          }
+        });
+        currentSlide = index;
+      }
+
+      clearInterval(slideInterval);
+      slideInterval = setInterval(() => {
+        let next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+      }, 2000);
+
+      window.setBannerSlide = function(index) {
+        showSlide(index);
+        clearInterval(slideInterval);
+        slideInterval = setInterval(() => {
+          let next = (currentSlide + 1) % slides.length;
+          showSlide(next);
+        }, 2000);
+      };
+    }
+
+    // 2. Render Provider Cards Section (EXACTLY 4 per category on homepage)
+    function renderCategorySections(data) {
+      const container = document.getElementById('categories-container');
+      container.innerHTML = '';
+
+      const categoriesMap = {};
+      data.forEach(item => {
+        if (!categoriesMap[item.category]) categoriesMap[item.category] = [];
+        categoriesMap[item.category].push(item);
+      });
+
+      const categoriesList = Object.keys(categoriesMap);
+
+      if (categoriesList.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-10 bg-white rounded-3xl border border-slate-200 shadow-sm">
+            <i class="ph-bold ph-magnifying-glass text-3xl text-slate-400 mb-2"></i>
+            <p class="text-sm font-bold text-slate-800">No Service Providers Found</p>
+            <p class="text-xs text-slate-500 mt-0.5">Try resetting search filters or selecting another location.</p>
+            <button onclick="resetSearchFilters()" class="mt-3 px-3.5 py-1.5 bg-gb-600 text-white rounded-xl text-xs font-bold">Reset Search</button>
+          </div>
+        `;
+        return;
+      }
+
+      categoriesList.forEach((catName, catIdx) => {
+        const providers = categoriesMap[catName];
+        const displayProviders = providers.slice(0, 4); // Display EXACTLY 4 providers
+
+        const sectionEl = document.createElement('div');
+        sectionEl.className = 'bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm';
+
+        sectionEl.innerHTML = `
+          <div class="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-5 bg-gb-600 rounded-full"></span>
+              <div>
+                <h3 class="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">${catName}</h3>
+                <p class="text-[10px] text-slate-500">Verified ${catName.toLowerCase()} specialists in GB</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="openViewAllModal('${catName}')" class="px-2.5 py-1 rounded-lg bg-gb-50 hover:bg-gb-100 text-gb-700 font-bold text-[11px] border border-gb-200 transition-colors flex items-center gap-1">
+                <span>View All (${providers.length})</span>
+                <i class="ph-bold ph-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Provider Cards 4-Column Responsive Layout / Swipe Track -->
+          <div id="carousel-track-${catIdx}" class="flex lg:grid lg:grid-cols-4 gap-3.5 overflow-x-auto no-scrollbar scroll-smooth pb-1 snap-x snap-mandatory">
+            ${displayProviders.map(p => createProviderCardHTML(p)).join('')}
+          </div>
+        `;
+
+        container.appendChild(sectionEl);
+      });
+    }
+
+    // Card Template - Optimized for Mobile Fit
+    function createProviderCardHTML(p) {
+      return `
+        <div class="w-[85vw] max-w-[320px] sm:w-[280px] lg:w-auto flex-shrink-0 bg-slate-50 rounded-xl sm:rounded-2xl border border-slate-200/80 overflow-hidden flex flex-col justify-between group snap-center hover:shadow-md transition-all">
+          <div>
+            <div class="relative h-36 overflow-hidden bg-slate-200">
+              <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/500x300/0f172a/ffffff?text=GB+Service'">
+              <span class="absolute top-2 left-2 bg-slate-900/85 backdrop-blur-md text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">
+                ${p.category}
+              </span>
+              <span class="absolute top-2 right-2 bg-gb-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+                ★ ${p.rating}
+              </span>
+            </div>
+
+            <div class="p-3">
+              <h4 class="font-bold text-slate-900 text-xs sm:text-sm line-clamp-1 group-hover:text-gb-600 transition-colors">${p.name}</h4>
+              
+              <div class="flex items-center text-[11px] text-slate-500 mt-0.5 mb-1.5">
+                <i class="ph-bold ph-map-pin text-gb-600 mr-1 flex-shrink-0"></i>
+                <span class="truncate">${p.location}</span>
+              </div>
+
+              <p class="text-[11px] text-slate-600 line-clamp-2 leading-relaxed mb-2.5">${p.description}</p>
+
+              <div class="py-1 px-2 bg-white rounded-md border border-slate-200 flex items-center justify-between mb-2">
+                <span class="text-[9px] text-slate-400 font-bold uppercase">Price</span>
+                <span class="text-[11px] font-extrabold text-gb-700">${p.price}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 pt-0 grid grid-cols-2 gap-1.5">
+            <button onclick="openModal('${p.name}', '${p.description} <br><br><b>Location:</b> ${p.location}<br><b>Price Tag:</b> ${p.price}')" class="w-full py-1.5 rounded-lg border border-gb-600 text-gb-700 hover:bg-gb-50 text-[11px] font-bold transition-colors flex items-center justify-center gap-1">
+              <i class="ph-bold ph-eye"></i> View
+            </button>
+            <button onclick="triggerCallProvider('${p.name}', '${p.phone}')" class="w-full py-1.5 rounded-lg bg-gb-600 hover:bg-gb-700 text-white text-[11px] font-bold transition-all shadow-sm flex items-center justify-center gap-1">
+              <i class="ph-bold ph-phone"></i> Call
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. Category Filter Trigger
+    function filterCategory(catKey) {
+      const filtered = mockProvidersData.filter(item => item.catKey === catKey);
+      renderCategorySections(filtered.length > 0 ? filtered : mockProvidersData);
+
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        const isCurrent = btn.dataset.cat === catKey;
+        btn.querySelector('div').classList.toggle('ring-4', isCurrent);
+        btn.querySelector('div').classList.toggle('ring-gb-400', isCurrent);
+      });
+
+      document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 4. Search Filter Trigger
+    function handleSearch(e) {
+      e.preventDefault();
+      const location = document.getElementById('location-select').value;
+      const keyword = document.getElementById('search-keyword').value.toLowerCase().trim();
+
+      let filtered = mockProvidersData;
+
+      if (location !== 'all') {
+        filtered = filtered.filter(p => p.location.toLowerCase().includes(location.toLowerCase()));
+      }
+      if (keyword) {
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(keyword) || p.description.toLowerCase().includes(keyword) || p.category.toLowerCase().includes(keyword));
+      }
+
+      renderCategorySections(filtered);
+      document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetSearchFilters() {
+      document.getElementById('location-select').value = 'all';
+      document.getElementById('search-keyword').value = '';
+      renderCategorySections(mockProvidersData);
+    }
+
+    // Modal Operations
+    function openModal(title, text) {
+      document.getElementById('info-modal-title').innerText = title;
+      document.getElementById('info-modal-body').innerHTML = text;
+      document.getElementById('info-modal').classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function triggerCallProvider(name, phone) {
+      document.getElementById('call-provider-name').innerText = name;
+      document.getElementById('call-provider-phone').innerText = phone;
+      document.getElementById('call-trigger-link').href = `tel:${phone.replace(/\s+/g, '')}`;
+      document.getElementById('call-modal').classList.remove('hidden');
+    }
+
+    function openViewAllModal(catName) {
+      const list = mockProvidersData.filter(p => p.category === catName);
+      document.getElementById('view-all-title').innerText = `All ${catName} Providers (${list.length})`;
+      document.getElementById('view-all-grid').innerHTML = list.map(p => createProviderCardHTML(p)).join('');
+      document.getElementById('view-all-modal').classList.remove('hidden');
+    }
+
+    function openMoreCategoriesModal() {
+      document.getElementById('more-modal').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
