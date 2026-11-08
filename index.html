@@ -328,7 +328,7 @@
         </div>
 
         <!-- 8 Circular Category Buttons + 9th "More" Option -->
-        <div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-9 gap-2 sm:gap-3 justify-items-center">
+        <div class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-3 sm:gap-3 justify-items-center">
           
           <!-- 1. Plumber -->
           <button onclick="filterCategory('plumber')" class="category-btn group flex flex-col items-center focus:outline-none w-full" data-cat="plumber">
@@ -711,7 +711,7 @@
 
       categoriesList.forEach((catName, catIdx) => {
         const providers = categoriesMap[catName];
-        const displayProviders = providers.slice(0, 3); // Show a maximum of 3 providers on the homepage
+        const displayProviders = providers.slice(0, 4); // Show the first 4 providers; View All opens the complete category
 
         const sectionEl = document.createElement('div');
         sectionEl.className = 'bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm';
@@ -734,7 +734,11 @@
             </div>
           </div>
 
-          <!-- Provider Cards 4-Column Responsive Layout / Swipe Track -->
+          <div class="flex items-center justify-end gap-1.5 mb-2 text-[10px] sm:text-xs font-semibold text-slate-400" aria-label="Scroll horizontally to see more services">
+            <span>Swipe left to explore</span>
+            <i class="ph-bold ph-arrow-left animate-pulse text-gb-600"></i>
+          </div>
+          <!-- Horizontal provider carousel; View All opens every provider in this category -->
           <div id="carousel-track-${catIdx}" class="flex gap-3.5 overflow-x-auto no-scrollbar scroll-smooth pb-1 snap-x snap-mandatory">
             ${displayProviders.map(p => createProviderCardHTML(p)).join('')}
           </div>
