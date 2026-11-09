@@ -250,7 +250,8 @@
                   <label class="block text-[10px] font-bold text-slate-300 uppercase tracking-wider mb-1">Service or Provider</label>
                   <div class="relative">
                     <i class="ph-bold ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="search-keyword" placeholder="e.g. Plumber, Hotel, Prado jeep, Hostel..." class="w-full pl-8 pr-3 py-2 text-xs bg-slate-900/90 text-white border border-slate-700 rounded-xl focus:ring-2 focus:ring-gb-500 placeholder-slate-400 outline-none" />
+                    <input type="text" id="search-keyword" placeholder="e.g. Plumber, Hotel, Prado jeep, Hostel..." autocomplete="off" oninput="showCategorySuggestions()" onkeydown="handleSuggestionKeydown(event)" aria-autocomplete="list" aria-controls="category-suggestions" class="w-full pl-8 pr-3 py-2 text-xs bg-slate-900/90 text-white border border-slate-700 rounded-xl focus:ring-2 focus:ring-gb-500 placeholder-slate-400 outline-none" />
+                    <div id="category-suggestions" role="listbox" class="hidden absolute left-0 right-0 top-full mt-1 z-30 bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden text-slate-800"></div>
                   </div>
                 </div>
 
@@ -700,21 +701,117 @@
       document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // 4. Search Filter Trigger
+    // Search categories and common alternative spellings/terms.
+    const searchableCategories = [
+      { key: 'plumber', label: 'Plumber', terms: ['plumbing', 'pipe repair', 'water pipe', 'sanitary'] },
+      { key: 'electrician', label: 'Electrician', terms: ['electrical', 'electric', 'wiring', 'ups repair'] },
+      { key: 'carpenter', label: 'Carpenter', terms: ['carpentry', 'woodwork', 'furniture', 'wood worker'] },
+      { key: 'ac-technicians', label: 'AC Technicians', terms: ['ac', 'air conditioner', 'air conditioning', 'hvac', 'cooling', 'heating'] },
+      { key: 'room-bookings', label: 'Rooms', terms: ['room', 'guest room', 'accommodation', 'stay', 'lodging'] },
+      { key: 'hotels-bookings', label: 'Hotels', terms: ['hotel', 'resort', 'lodging', 'accommodation'] },
+      { key: 'rental-car', label: 'Rental Cars', terms: ['car rental', 'rent a car', 'jeep', 'prado', 'land cruiser', '4x4', 'vehicle'] },
+      { key: 'party-rentals', label: 'Party & Event Rentals', terms: ['event', 'party', 'wedding', 'canopy', 'chairs', 'tent'] },
+      { key: 'hostels-booking', label: 'Hostels', terms: ['hostel', 'student hostel', 'dormitory'] },
+      { key: 'catering', label: 'Catering', terms: ['food', 'caterer', 'catering service'] },
+      { key: 'mountain-tour-guides', label: 'Mountain Tour Guides', terms: ['tour guide', 'mountain guide', 'guide', 'trekking'] },
+      { key: 'solar-installation', label: 'Solar Technicians', terms: ['solar', 'solar panel', 'inverter', 'solar installation'] }
+    ];
+
+    function normalizeSearchText(value) {
+      return String(value || '').toLowerCase().trim()
+        .replace(/&/g, ' and ')
+        .replace(/[^a-z0-9]+/g, ' ')
+        .replace(/\\s+/g, ' ');
+    }
+
+    // Small edit-distance check helps recover from common typing mistakes.
+    function searchEditDistance(a, b) {
+      const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+      for (let i = 1; i <= a.length; i++) {
+        let previous = row[0];
+        row[0] = i;
+        for (let j = 1; j <= b.length; j++) {
+          const current = row[j];
+          row[j] = Math.min(row[j] + 1, row[j - 1] + 1, previous + (a[i - 1] === b[j - 1] ? 0 : 1));
+          previous = current;
+        }
+      }
+      return row[b.length];
+    }
+
+    function categoryMatchesQuery(category, query) {
+      const q = normalizeSearchText(query);
+      if (!q) return false;
+      const terms = [category.label, ...category.terms].map(normalizeSearchText);
+      return terms.some(term => {
+        if (term.includes(q) || q.includes(term)) return true;
+        const words = term.split(' ');
+        return q.split(' ').some(qWord => words.some(word =>
+          Math.min(qWord.length, word.length) >= 4 &&
+          searchEditDistance(qWord, word) <= (Math.max(qWord.length, word.length) >= 8 ? 2 : 1)
+        ));
+      });
+    }
+
+    function showCategorySuggestions() {
+      const input = document.getElementById('search-keyword');
+      const panel = document.getElementById('category-suggestions');
+      const query = input.value.trim();
+      if (!query) {
+        panel.classList.add('hidden');
+        panel.innerHTML = '';
+        return;
+      }
+      const matches = searchableCategories.filter(category => categoryMatchesQuery(category, query)).slice(0, 6);
+      if (!matches.length) {
+        panel.innerHTML = '<div class="px-3 py-2 text-xs text-slate-500">No matching category suggestion. Try a service name such as plumber, hotel, AC or car.</div>';
+        panel.classList.remove('hidden');
+        return;
+      }
+      panel.innerHTML = matches.map(category =>
+        `<button type="button" role="option" onclick="selectCategorySuggestion('${category.key}')" class="w-full px-3 py-2.5 text-left text-xs font-semibold hover:bg-gb-50 focus:bg-gb-50 flex items-center justify-between border-b border-slate-100 last:border-0"><span>${category.label}</span><span class="text-[10px] text-gb-700">Select category</span></button>`
+      ).join('');
+      panel.classList.remove('hidden');
+    }
+
+    function selectCategorySuggestion(categoryKey) {
+      const category = searchableCategories.find(item => item.key === categoryKey);
+      if (!category) return;
+      document.getElementById('search-keyword').value = category.label;
+      document.getElementById('category-suggestions').classList.add('hidden');
+      handleSearch();
+    }
+
+    function handleSuggestionKeydown(event) {
+      if (event.key === 'Escape') {
+        document.getElementById('category-suggestions').classList.add('hidden');
+      }
+    }
+
+    // 4. Search filters providers by selected district and service/provider details.
     function handleSearch(e) {
-      e.preventDefault();
+      if (e) e.preventDefault();
       const location = document.getElementById('location-select').value;
-      const keyword = document.getElementById('search-keyword').value.toLowerCase().trim();
+      const rawKeyword = document.getElementById('search-keyword').value.trim();
+      const keyword = normalizeSearchText(rawKeyword);
+      const matchingCategories = searchableCategories.filter(category => categoryMatchesQuery(category, rawKeyword));
+      const matchingKeys = new Set(matchingCategories.map(category => category.key));
 
       let filtered = mockProvidersData;
 
       if (location !== 'all') {
-        filtered = filtered.filter(p => p.location.toLowerCase().includes(location.toLowerCase()));
+        filtered = filtered.filter(p => normalizeSearchText(p.location).includes(normalizeSearchText(location)));
       }
       if (keyword) {
-        filtered = filtered.filter(p => p.name.toLowerCase().includes(keyword) || p.description.toLowerCase().includes(keyword) || p.category.toLowerCase().includes(keyword));
+        filtered = filtered.filter(p => {
+          const providerText = normalizeSearchText([p.name, p.description, p.category, p.location].join(' '));
+          const directMatch = providerText.includes(keyword);
+          const categoryMatch = matchingKeys.has(p.catKey);
+          return directMatch || categoryMatch;
+        });
       }
 
+      document.getElementById('category-suggestions').classList.add('hidden');
       renderCategorySections(filtered);
       document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
     }
@@ -722,6 +819,7 @@
     function resetSearchFilters() {
       document.getElementById('location-select').value = 'all';
       document.getElementById('search-keyword').value = '';
+      document.getElementById('category-suggestions').classList.add('hidden');
       renderCategorySections(mockProvidersData);
     }
 
