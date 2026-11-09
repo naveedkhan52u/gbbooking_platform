@@ -448,7 +448,49 @@
     </div>
   </div>
 
-  <!-- More Categories Modal -->
+  <!-- Provider Booking Modal -->
+  <div id="booking-modal" class="fixed inset-0 z-[60] hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[92vh] overflow-y-auto">
+      <button type="button" onclick="closeModal('booking-modal')" class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 text-slate-600 shadow flex items-center justify-center"><i class="ph-bold ph-x"></i></button>
+      <div class="p-4 sm:p-6">
+        <h3 class="text-lg font-extrabold text-slate-900 mb-1">Book This Service</h3>
+        <p class="text-xs text-slate-500 mb-4">Enter your contact details and service duration to calculate the estimated price.</p>
+        <div class="flex gap-3 items-center bg-slate-50 border border-slate-200 rounded-xl p-2.5 mb-4">
+          <img id="booking-provider-image" src="" alt="" class="w-20 h-16 rounded-lg object-cover bg-slate-200">
+          <div class="min-w-0">
+            <h4 id="booking-provider-name" class="font-bold text-sm text-slate-900"></h4>
+            <p id="booking-provider-location" class="text-[11px] text-slate-500"></p>
+            <p id="booking-provider-rate" class="text-xs font-extrabold text-gb-700 mt-1"></p>
+          </div>
+        </div>
+        <form id="provider-booking-form" onsubmit="submitBooking(event)" class="space-y-3">
+          <div>
+            <label for="booking-customer-name" class="block text-xs font-bold text-slate-700 mb-1">Customer Name</label>
+            <input id="booking-customer-name" name="customerName" type="text" required maxlength="100" autocomplete="name" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-gb-500">
+          </div>
+          <div>
+            <label for="booking-contact" class="block text-xs font-bold text-slate-700 mb-1">Contact Number</label>
+            <input id="booking-contact" name="contact" type="tel" required maxlength="30" autocomplete="tel" placeholder="+92 3XX XXXXXXX" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-gb-500">
+          </div>
+          <div>
+            <label id="booking-quantity-label" for="booking-quantity" class="block text-xs font-bold text-slate-700 mb-1">Quantity</label>
+            <input id="booking-quantity" name="quantity" type="number" min="1" max="365" step="1" value="1" required oninput="updateBookingTotal()" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-sm outline-none focus:ring-2 focus:ring-gb-500">
+          </div>
+          <div class="flex items-center justify-between rounded-xl bg-gb-50 border border-gb-100 px-3 py-3">
+            <div>
+              <p class="text-[10px] uppercase font-bold tracking-wide text-slate-500">Estimated total</p>
+              <p id="booking-total" class="text-xl font-black text-gb-800">PKR 0</p>
+            </div>
+            <span id="booking-calculation" class="text-[11px] text-slate-600 text-right"></span>
+          </div>
+          <p class="text-[10px] leading-relaxed text-slate-500">This is an estimated amount based on the provider's listed rate. Final charges may be confirmed by the provider.</p>
+          <button type="submit" class="w-full py-3 rounded-xl bg-gb-600 hover:bg-gb-700 text-white text-sm font-bold shadow-md">Continue Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+    <!-- More Categories Modal -->
   <div id="more-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-5 shadow-2xl relative">
       <button onclick="closeModal('more-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1">
@@ -672,11 +714,11 @@
           </div>
 
           <div class="p-3 pt-0 grid grid-cols-2 gap-1.5">
-            <button onclick="openModal('${p.name}', '${p.description} <br><br><b>Location:</b> ${p.location}<br><b>Price Tag:</b> ${p.price}')" class="w-full py-1.5 rounded-lg border border-gb-600 text-gb-700 hover:bg-gb-50 text-[11px] font-bold transition-colors flex items-center justify-center gap-1">
+            <button onclick="viewProviderDetails('${p.id}')" class="w-full py-1.5 rounded-lg border border-gb-600 text-gb-700 hover:bg-gb-50 text-[11px] font-bold transition-colors flex items-center justify-center gap-1">
               <i class="ph-bold ph-eye"></i> View
             </button>
-            <button onclick="triggerCallProvider('${p.name}', '${p.phone}')" class="w-full py-1.5 rounded-lg bg-gb-600 hover:bg-gb-700 text-white text-[11px] font-bold transition-all shadow-sm flex items-center justify-center gap-1">
-              <i class="ph-bold ph-phone"></i> Call
+            <button onclick="openBookingForm('${p.id}')" class="w-full py-1.5 rounded-lg bg-gb-600 hover:bg-gb-700 text-white text-[11px] font-bold transition-all shadow-sm flex items-center justify-center gap-1">
+              <i class="ph-bold ph-calendar-check"></i> Book
             </button>
           </div>
         </div>
@@ -832,6 +874,82 @@
 
     function closeModal(id) {
       document.getElementById(id).classList.add('hidden');
+    }
+
+    let selectedBookingProvider = null;
+
+    function getProviderById(providerId) {
+      return mockProvidersData.find(provider => provider.id === providerId);
+    }
+
+    function viewProviderDetails(providerId) {
+      const provider = getProviderById(providerId);
+      if (!provider) return;
+      document.getElementById('info-modal-title').innerText = provider.name;
+      document.getElementById('info-modal-body').innerHTML = `
+        <img src="${provider.image}" alt="${provider.name}" class="w-full h-48 object-cover rounded-xl mb-3" onerror="this.src='https://placehold.co/600x360/0f172a/ffffff?text=GB+Service'">
+        <p class="text-sm text-slate-700 leading-relaxed mb-3">${provider.description}</p>
+        <div class="space-y-1 text-xs text-slate-600">
+          <p><b>Category:</b> ${provider.category}</p>
+          <p><b>Location:</b> ${provider.location}</p>
+          <p><b>Price:</b> ${provider.price}</p>
+          <p><b>Rating:</b> ★ ${provider.rating} (${provider.reviews} reviews)</p>
+        </div>`;
+      document.getElementById('info-modal').classList.remove('hidden');
+    }
+
+    function parseProviderRate(priceText) {
+      const match = String(priceText || '').match(/PKR\\s*([\\d,]+)\\s*\\/\\s*(.+)/i);
+      if (!match) return null;
+      return { amount: Number(match[1].replace(/,/g, '')), unit: match[2].trim().toLowerCase() };
+    }
+
+    function openBookingForm(providerId) {
+      const provider = getProviderById(providerId);
+      if (!provider) return;
+      selectedBookingProvider = provider;
+      const rate = parseProviderRate(provider.price);
+      const unitLabels = {
+        day: 'Days', hour: 'Hours', night: 'Nights', month: 'Months',
+        visit: 'Visits', event: 'Events', head: 'People'
+      };
+      const unit = rate ? rate.unit.replace(/s$/, '') : 'unit';
+      const label = unitLabels[unit] || 'Quantity';
+      document.getElementById('booking-provider-image').src = provider.image;
+      document.getElementById('booking-provider-image').alt = provider.name;
+      document.getElementById('booking-provider-name').innerText = provider.name;
+      document.getElementById('booking-provider-location').innerText = provider.location;
+      document.getElementById('booking-provider-rate').innerText = provider.price;
+      document.getElementById('booking-quantity-label').innerText = label;
+      document.getElementById('booking-quantity').value = 1;
+      document.getElementById('booking-quantity').step = 1;
+      document.getElementById('booking-calculation').innerText = rate ? `1 × PKR ${rate.amount.toLocaleString('en-PK')}` : 'Price to be confirmed';
+      updateBookingTotal();
+      document.getElementById('provider-booking-form').reset();
+      document.getElementById('booking-quantity').value = 1;
+      document.getElementById('booking-modal').classList.remove('hidden');
+    }
+
+    function updateBookingTotal() {
+      const rate = selectedBookingProvider ? parseProviderRate(selectedBookingProvider.price) : null;
+      const quantity = Math.max(1, Number(document.getElementById('booking-quantity').value) || 1);
+      const total = rate ? rate.amount * quantity : 0;
+      document.getElementById('booking-total').innerText = rate ? `PKR ${total.toLocaleString('en-PK')}` : 'To be confirmed';
+      document.getElementById('booking-calculation').innerText = rate ? `${quantity} × PKR ${rate.amount.toLocaleString('en-PK')}` : 'Provider will confirm price';
+    }
+
+    function submitBooking(event) {
+      event.preventDefault();
+      if (!selectedBookingProvider) return;
+      const form = document.getElementById('provider-booking-form');
+      if (!form.reportValidity()) return;
+      const quantity = Math.max(1, Number(document.getElementById('booking-quantity').value) || 1);
+      const rate = parseProviderRate(selectedBookingProvider.price);
+      const total = rate ? rate.amount * quantity : null;
+      const unit = rate ? rate.unit : 'quantity';
+      const customerName = document.getElementById('booking-customer-name').value.trim();
+      document.getElementById('booking-modal').classList.add('hidden');
+      openModal('Booking Details Ready', `Your booking details for <b>${selectedBookingProvider.name}</b> have been prepared.<br><br><b>Customer:</b> ${customerName}<br><b>Duration / Quantity:</b> ${quantity} ${unit}<br><b>Estimated total:</b> ${total === null ? 'To be confirmed by provider' : 'PKR ' + total.toLocaleString('en-PK')}<br><br><span class="text-amber-700">This frontend demo does not submit or save bookings yet. Backend booking integration is required to send this request to the provider.</span>`);
     }
 
     function triggerCallProvider(name, phone) {
