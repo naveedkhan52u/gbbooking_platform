@@ -568,10 +568,34 @@
     let currentSlide = 0;
     let slideInterval;
 
-    document.addEventListener('DOMContentLoaded', () => {
-      initBannerSlider();
-      renderCategorySections(mockProvidersData);
-    });
+    // Initialize after the provider container exists. This also supports pages
+    // where the script is loaded after DOMContentLoaded has already fired.
+    function initializeHomepage() {
+      const providerContainer = document.getElementById('categories-container');
+      if (!providerContainer) {
+        console.error('GBBooking: categories-container was not found.');
+        return;
+      }
+
+      try {
+        initBannerSlider();
+        renderCategorySections(mockProvidersData);
+        console.info('GBBooking: rendered ' + mockProvidersData.length + ' static service providers.');
+      } catch (error) {
+        console.error('GBBooking: provider rendering failed.', error);
+        providerContainer.innerHTML = `
+          <div class="text-center py-10 bg-white rounded-3xl border border-rose-200 shadow-sm">
+            <p class="text-sm font-bold text-slate-800">Services could not be displayed</p>
+            <p class="text-xs text-slate-500 mt-1">Please refresh the page. If the problem continues, contact support.</p>
+          </div>`;
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeHomepage, { once: true });
+    } else {
+      initializeHomepage();
+    }
 
     // 1. Auto-rotating Hero Banner Slider (2 Seconds)
     function initBannerSlider() {
