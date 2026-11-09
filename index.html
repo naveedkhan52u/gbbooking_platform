@@ -899,7 +899,7 @@
     }
 
     function parseProviderRate(priceText) {
-      const match = String(priceText || '').match(/PKR\\s*([\\d,]+)\\s*\\/\\s*(.+)/i);
+      const match = String(priceText || '').match(/PKR\s*([\d,]+)\s*\/\s*(.+)/i);
       if (!match) return null;
       return { amount: Number(match[1].replace(/,/g, '')), unit: match[2].trim().toLowerCase() };
     }
