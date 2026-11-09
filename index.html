@@ -568,17 +568,31 @@
     let currentSlide = 0;
     let slideInterval;
 
-    // Initialize after the provider container exists. This also supports pages
-    // where the script is loaded after DOMContentLoaded has already fired.
+    // Render service providers independently from the hero slider.
+    // This script is placed after the homepage markup, so the container already exists.
+    let homepageInitialized = false;
     function initializeHomepage() {
+      if (homepageInitialized) return;
       const providerContainer = document.getElementById('categories-container');
       if (!providerContainer) {
         console.error('GBBooking: categories-container was not found.');
         return;
       }
+      homepageInitialized = true;
 
+      // Explicitly restore the services section in case a style accidentally hid it.
+      const servicesSection = document.getElementById('services');
+      if (servicesSection) {
+        servicesSection.style.display = 'block';
+        servicesSection.style.visibility = 'visible';
+        servicesSection.style.opacity = '1';
+      }
+      providerContainer.style.display = 'flex';
+      providerContainer.style.visibility = 'visible';
+      providerContainer.style.opacity = '1';
+
+      // Providers must render even if the independent banner slider has a problem.
       try {
-        initBannerSlider();
         renderCategorySections(mockProvidersData);
         console.info('GBBooking: rendered ' + mockProvidersData.length + ' static service providers.');
       } catch (error) {
@@ -589,13 +603,16 @@
             <p class="text-xs text-slate-500 mt-1">Please refresh the page. If the problem continues, contact support.</p>
           </div>`;
       }
+
+      try {
+        initBannerSlider();
+      } catch (error) {
+        console.error('GBBooking: hero slider initialization failed.', error);
+      }
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeHomepage, { once: true });
-    } else {
-      initializeHomepage();
-    }
+    // Run immediately because this inline script is located after the page markup.
+    initializeHomepage();
 
     // 1. Auto-rotating Hero Banner Slider (2 Seconds)
     function initBannerSlider() {
